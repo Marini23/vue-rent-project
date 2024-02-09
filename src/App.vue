@@ -1,42 +1,45 @@
 <script setup>
-import Button from "./components/Button.vue";
+import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
+const apartment = {
+  id: "5f689a2c09b16000e9a2f485",
+  title: "Nihil pariatur eum ab a ducimus nam.",
+  imgUrl: "/img/apartments/apartment-8.jpg",
+  descr:
+    "Quae aliquid odit aut quia. Sed aut sed quis repudiandae est consequatur id quo ut. Molestiae nemo maiores quis deleniti sequi et eaque architecto officia. Molestiae incidunt qui quia. Fugiat id eum totam porro autem.",
+  rating: 1,
+  price: 3959,
+  location: {
+    city: "Kharkiv",
+  },
+  owner: {
+    name: "Estell",
+    phone: "804-325-1372",
+    email: "Alta_Green@hotmail.com",
+  },
+};
 </script>
 
 <template>
-  <header>
-    <div class="wrapper"></div>
-  </header>
-
-  <main>
-    <Button outlined>Click Me here</Button>
-  </main>
+  <div id="app">
+    <ApartmentsItem
+      :descr="apartment.descr"
+      :price="apartment.price"
+      :rating="apartment.rating"
+    />
+  </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Montserrat, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.content {
+  flex-grow: 1;
 }
 </style>
