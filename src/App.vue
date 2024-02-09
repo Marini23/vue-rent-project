@@ -8,7 +8,7 @@ import Button from "./components/Button.vue";
   </header>
 
   <main>
-    <Button outlined>Click Me</Button>
+    <Button outlined>Click Me here</Button>
   </main>
 </template>
 
