@@ -1,13 +1,13 @@
 <template>
-  <form class="form" @submit.prevent="handleSubmit">
-    <CustomSelect :items="cities" v-model="city" class="form__select" />
-    <CustomInput v-model="price" placeholder="Цена, от" />
-    <SubmitButton class="form__submit" type="submit">
-      Подбор жилья
-    </SubmitButton>
-  </form>
-  <p>{{ price }}</p>
-  <p>{{ city }}</p>
+  <div>
+    <form class="form" @submit.prevent="handleSubmit">
+      <CustomSelect :items="cities" v-model="form.city" class="form__select" />
+      <CustomInput v-model="form.price" placeholder="Цена, от" />
+      <SubmitButton class="form__submit" type="submit">
+        Подбор жилья
+      </SubmitButton>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -23,10 +23,7 @@ export default {
     SubmitButton,
   },
   data() {
-    return {
-      price: "",
-      city: "",
-    };
+    return { form: { price: "", city: "" } };
   },
   computed: {
     // rules() {
@@ -48,10 +45,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$emit("submit", {
-        city: this.city,
-        price: this.price,
-      });
+      this.$emit("submit", this.form);
     },
   },
 };

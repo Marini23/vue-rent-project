@@ -5,23 +5,27 @@ import apartments from "./components/apartment/apartments";
 import ApartmentsFilterForm from "./components/apartment/ApartmentsFilterForm.vue";
 import Container from "./components/shared/Container.vue";
 import MyInput from "./components/shared/MyInput.vue";
+import MySelect from "./components/shared/MySelect.vue";
+import MyForm from "./components/shared/MyForm.vue";
 
-import { ref } from "vue";
+// const handleSubmit = (formData) => {
+//   console.log(formData, "---form submited");
+// };
 
-const inputFilter = ref("Hello World!");
-
-const handleSubmit = (value) => {
-  console.log(value, "---form submited");
+const handleMyFormSubmit = (formData) => {
+  console.log("Form Data:", formData);
 };
 </script>
 
 <template>
   <div id="app">
-    <p>{{ inputFilter }}</p>
-    <MyInput v-model="inputFilter" />
     <Container>
-      <ApartmentsFilterForm @submit="handleSubmit" />
+      <MyForm @submit="handleMyFormSubmit" class="apartments-filter" />
     </Container>
+
+    <!-- <Container>
+      <ApartmentsFilterForm @submit="handleSubmit" />
+    </Container> -->
     <ApartmentsList :items="apartments">
       <template v-slot:title="title">New title</template>
       <template v-slot:apartment="{ apartment }">
