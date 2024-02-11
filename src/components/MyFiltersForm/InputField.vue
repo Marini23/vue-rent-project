@@ -1,18 +1,11 @@
 <template>
-  <input
-    class="custom-input"
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-    placeholder="Цена, от"
-  />
+  <form>
+    <input v-model="model" v-bind="$attrs" class="custom-input" />
+  </form>
 </template>
 
-<script>
-export default {
-  props: {
-    modelValue: { type: String, gefault: "" },
-  },
-};
+<script setup>
+const model = defineModel();
 </script>
 
 <style lang="scss" scoped>

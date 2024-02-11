@@ -1,7 +1,7 @@
 <template>
-  <form @submit.prevent="submit" class="form">
-    <MySelect :items="cities" class="form__select" v-model="form.city" />
-    <MyInput type="text" v-model="form.text" />
+  <form class="form" @submit.prevent="submitForm">
+    <MySelect :items="cities" class="form__select" v-model="formData.city" />
+    <MyInput v-model="formData.price" />
     <SubmitButton type="submit" class="form__submit">Подбор жилья</SubmitButton>
   </form>
 </template>
@@ -19,8 +19,8 @@ export default {
   },
   data() {
     return {
-      form: {
-        text: "",
+      formData: {
+        price: "",
         city: "",
       },
     };
@@ -41,8 +41,10 @@ export default {
     },
   },
   methods: {
-    async submit() {
-      this.$emit("submit", this.form);
+    submitForm() {
+      this.$emit("submit", this.formData);
+      console.log(this.formData.price);
+      console.log(this.formData.city);
     },
   },
 };

@@ -22,21 +22,13 @@ export default {
       type: Array,
       required: true,
     },
-    modelValue: String,
+    modelValue: { type: String, gefault: "" },
   },
   computed: {
     formatedItems() {
       return this.items.map((item) => {
         return typeof item === "object" ? item : { value: item, label: item };
       });
-    },
-    value: {
-      get() {
-        return this.modelValue;
-      },
-      set(value) {
-        this.$emit("update:modelValue", value);
-      },
     },
   },
 };

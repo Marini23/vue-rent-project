@@ -4,29 +4,56 @@ import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import apartments from "./components/apartment/apartments";
 import ApartmentsFilterForm from "./components/apartment/ApartmentsFilterForm.vue";
 import Container from "./components/shared/Container.vue";
-import MyInput from "./components/shared/MyInput.vue";
-import MySelect from "./components/shared/MySelect.vue";
 import MyForm from "./components/shared/MyForm.vue";
+import FilterForm from "./components/MyFiltersForm/FilterForm.vue";
+import { reactive, computed } from "vue";
 
-// const handleSubmit = (formData) => {
-//   console.log(formData, "---form submited");
-// };
+const filters = reactive({
+  price: 0,
+  city: "",
+});
 
-const handleMyFormSubmit = (formData) => {
-  console.log("Form Data:", formData);
+function filterForm(data) {
+  filters.price = data.price;
+  filters.city = data.city;
+}
+
+const filterByCityName = (apartments) => {
+  if (!filters.city) {
+    return apartments;
+  }
+  return apartments.filter((apartment) => {
+    return apartment.location.city === filters.city;
+  });
 };
+
+function filterByPrice(apartments) {
+  if (!filters.price) {
+    return apartments;
+  }
+  return apartments.filter((apartment) => {
+    return apartment.price >= filters.price;
+  });
+}
+
+const filteredApartments = computed(() => {
+  return filterByCityName(filterByPrice(apartments));
+});
 </script>
 
 <template>
   <div id="app">
     <Container>
-      <MyForm @submit="handleMyFormSubmit" class="apartments-filter" />
+      <FilterForm @submit="filterForm" />
     </Container>
+    <!-- <Container>
+      <MyForm class="apartments-filter" @submit="updateFilters" />
+    </Container> -->
 
     <!-- <Container>
       <ApartmentsFilterForm @submit="handleSubmit" />
     </Container> -->
-    <ApartmentsList :items="apartments">
+    <ApartmentsList :items="filteredApartments">
       <template v-slot:title="title">New title</template>
       <template v-slot:apartment="{ apartment }">
         <ApartmentsItem
