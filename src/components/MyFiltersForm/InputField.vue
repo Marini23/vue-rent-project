@@ -1,10 +1,12 @@
 <template>
-  <form>
+  <div class="wrapper-input">
     <input v-model="model" v-bind="$attrs" class="custom-input" />
-  </form>
+  </div>
 </template>
 
 <script setup>
+import { defineModel } from "vue";
+
 const model = defineModel();
 </script>
 
