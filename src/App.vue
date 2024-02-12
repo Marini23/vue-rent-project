@@ -2,10 +2,10 @@
 import ApartmentsList from "./components/apartment/ApartmentsList.vue";
 import ApartmentsItem from "./components/apartment/ApartmentsItem.vue";
 import apartments from "./components/apartment/apartments";
-import ApartmentsFilterForm from "./components/apartment/ApartmentsFilterForm.vue";
 import Container from "./components/shared/Container.vue";
-import MyForm from "./components/shared/MyForm.vue";
 import FilterForm from "./components/MyFiltersForm/FilterForm.vue";
+import Footer from "./components/shared/Footer.vue";
+import Header from "./components/shared/Header.vue";
 import { reactive, computed } from "vue";
 
 const filters = reactive({
@@ -43,28 +43,28 @@ const filteredApartments = computed(() => {
 
 <template>
   <div id="app">
-    <Container>
-      <FilterForm @submit="filterForm" />
-    </Container>
-    <!-- <Container>
-      <MyForm class="apartments-filter" @submit="updateFilters" />
-    </Container> -->
-
-    <!-- <Container>
-      <ApartmentsFilterForm @submit="handleSubmit" />
-    </Container> -->
-    <ApartmentsList :items="filteredApartments">
-      <template v-slot:title="title">New title</template>
-      <template v-slot:apartment="{ apartment }">
-        <ApartmentsItem
-          :key="apartment.id"
-          :descr="apartment.descr"
-          :rating="apartment.rating"
-          :imgSrc="apartment.imgUrl"
-          :price="apartment.price"
-        />
-      </template>
-    </ApartmentsList>
+    <div class="content">
+      <Header />
+      <Container>
+        <FilterForm @submit="filterForm" class="apartments-filter" />
+      </Container>
+      <Container>
+        <router-view></router-view>
+        <p v-if="!filteredApartments.length">Ничего не найдено</p>
+        <ApartmentsList :items="filteredApartments">
+          <template v-slot:apartment="{ apartment }">
+            <ApartmentsItem
+              :key="apartment.id"
+              :descr="apartment.descr"
+              :rating="apartment.rating"
+              :imgSrc="apartment.imgUrl"
+              :price="apartment.price"
+            />
+          </template>
+        </ApartmentsList>
+      </Container>
+    </div>
+    <Footer />
   </div>
 </template>
 
@@ -80,6 +80,7 @@ const filteredApartments = computed(() => {
 
 .content {
   flex-grow: 1;
+  padding-top: 120px;
 }
 
 .apartments-filter {
