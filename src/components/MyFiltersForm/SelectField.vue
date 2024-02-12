@@ -6,7 +6,6 @@
       onChange: emitUpdate,
     }"
   >
-    <option value="">All cities</option>
     <option v-for="item in formatedItems" :key="item.value" :value="item.value">
       {{ item.label }}
     </option>
@@ -19,7 +18,7 @@ import { computed, defineProps, defineEmits, ref } from "vue";
 const props = defineProps({
   items: Array,
 });
-const selected = ref();
+const selected = ref("");
 const emit = defineEmits(["update:modelValue"]);
 
 const formatedItems = computed(() => {

@@ -1,8 +1,8 @@
 <template>
   <form class="form" @submit.prevent="submitForm">
     <SelectField :items="cities" v-model="data.city" class="form__select" />
-    <InputField v-model="data.price" placeholder="Enter price" type="number" />
-    <SubmitButton type="submit" class="form__submit">Select</SubmitButton>
+    <InputField v-model="data.price" placeholder="Цена, от" type="number" />
+    <SubmitButton type="submit" class="form__submit">Подбор жилья</SubmitButton>
   </form>
 </template>
 
@@ -36,7 +36,7 @@ const submitForm = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .form {
   display: flex;
 
