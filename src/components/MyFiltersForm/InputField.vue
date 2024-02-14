@@ -11,7 +11,9 @@
 </template>
 
 <script setup>
-import { defineModel, defineProps, watch, ref } from "vue";
+import { defineModel, defineProps, watch, ref, inject } from "vue";
+
+const { items, registerInput, unRegisterInput } = inject("form");
 
 const { type, errorMessage, rules } = defineProps({
   errorMessage: {
@@ -43,6 +45,32 @@ function validate(value) {
     return hasPassed;
   });
 }
+
+onMounted(() => {
+  if (!items) return;
+
+  registerInput(model);
+});
+
+onBeforeUnmount(() => {
+  if (!items) return;
+
+  unRegisterInput(model);
+});
+
+const validate = () => {
+  isValid = rules.every((rule) => {
+    const { hasPassed, message } = rule(value);
+  });
+  if (!hasPassed) {
+    this.error = message || this.errorMessage;
+  }
+  return hasPassed;
+};
+
+const reset = () => {
+  $emit("input", "");
+};
 </script>
 
 <style lang="scss" scoped>
