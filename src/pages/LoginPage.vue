@@ -1,5 +1,6 @@
 <template>
   <main class="login">
+    <LoginForm />
     <!-- <AuthSection>
       <LoginForm />
     </AuthSection> -->
@@ -7,14 +8,13 @@
 </template>
 
 <script>
-// import LoginForm from '../components/auth/login';
+import LoginForm from "../components/auth/LoginForm.vue";
 // import AuthSection from '../components/auth/AuthSection';
 
 export default {
   name: "LoginPage",
   components: {
     LoginForm,
-    AuthSection,
   },
 };
 </script>

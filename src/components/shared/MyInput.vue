@@ -1,23 +1,83 @@
 <template>
-  <input
-    class="custom-input"
-    :value="modelValue"
-    @input="$emit('update:modelValue', $event.target.value)"
-    placeholder="Цена, от"
-  />
+  <div class="wrapper-input">
+    <input
+      v-model="model"
+      v-bind="$attrs"
+      class="custom-input"
+      :class="!isValid && 'custom-input--error'"
+    />
+    <span v-if="!isValid" class="custom-input__error">{{ error }}</span>
+  </div>
 </template>
 
-<script>
-export default {
-  props: {
-    modelValue: { type: String, gefault: "" },
+<script setup>
+import {
+  defineModel,
+  defineProps,
+  watch,
+  ref,
+  inject,
+  onMounted,
+  onBeforeUnmount,
+} from "vue";
+
+const { inputs, registerInput, unRegisterInput } = inject("form");
+
+const { type, errorMessage, rules } = defineProps({
+  errorMessage: {
+    type: String,
+    default: "",
   },
+  rules: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const model = defineModel();
+
+let error = ref("");
+let isValid = ref(true);
+
+watch(model, (newModel) => {
+  validate(newModel);
+});
+
+onMounted(() => {
+  if (!inputs) return;
+
+  registerInput(model);
+});
+
+onBeforeUnmount(() => {
+  if (!inputs) return;
+
+  unRegisterInput(model);
+});
+
+const validate = (value) => {
+  isValid = rules.every((rule) => {
+    const { hasPassed, message } = rule(value);
+    if (!hasPassed) {
+      error = message || errorMessage;
+    }
+
+    return hasPassed;
+  });
+};
+
+const reset = () => {
+  $emit("input", "");
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/variables";
 
+.wrapper-input {
+  position: relative;
+  display: inline-flex;
+}
 .custom-input {
   height: 40px;
   max-width: 220px;
@@ -30,6 +90,19 @@ export default {
 
   &::placeholder {
     color: inherit;
+  }
+  &--error {
+    border-color: red;
+  }
+
+  &__error {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    font-size: 12px;
+    color: red;
+    line-height: 1.3;
   }
 }
 </style>
